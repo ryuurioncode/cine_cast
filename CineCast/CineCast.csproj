@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x86</PlatformTarget>
+	<Platforms>x86</Platforms>
+	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>true</SelfContained>
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="NAudio.Lame" Version="2.1.0" />
+    <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+    <PackageReference Include="VariuSoft.IceCast2Sharp" Version="1.0.0.7" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libshout-3.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="libgcc_s_sjlj-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libshout-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libspeex-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libtheora-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libwinpthread-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libgcc_s_sjlj-1.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libogg-0.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libspeex-1.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libtheora-0.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libvorbis-0.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="libwinpthread-1.dll" />
+  </ItemGroup>
+
+</Project>

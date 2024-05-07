@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineCast", "CineCast\CineCast.csproj", "{D48A26E8-AF63-47DC-A882-246C40F2329B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{536743C2-144E-4163-8065-1221982B7F4A}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\user\Desktop\3848023.gif = C:\Users\user\Desktop\3848023.gif
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D48A26E8-AF63-47DC-A882-246C40F2329B}.Debug|x86.ActiveCfg = Debug|x86
+		{D48A26E8-AF63-47DC-A882-246C40F2329B}.Debug|x86.Build.0 = Debug|x86
+		{D48A26E8-AF63-47DC-A882-246C40F2329B}.Release|x86.ActiveCfg = Release|x86
+		{D48A26E8-AF63-47DC-A882-246C40F2329B}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84303B55-190A-4E63-8A8C-27DF8574DA2C}
+	EndGlobalSection
+EndGlobal
