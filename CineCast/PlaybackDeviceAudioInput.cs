@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using static System.Formats.Asn1.AsnWriter;
+using System.Drawing;
 
 namespace CineCast
 {
@@ -23,19 +24,33 @@ namespace CineCast
         private readonly VolumeSampleProvider volumer;
         private int maxLatency = 40000;
         private int currentLatencyMillis = 0;
+        private bool firstBuffer = false;
+        byte[] bufferBack;
+        byte[] bufferForward;
         public PlaybackDeviceAudioInput(WaveFormat format, MMDevice device, int DesiredLatency = 100)
         {
             this.currentLatencyMillis = DesiredLatency;
             this.format = format;
             this.device = device;
             captureDevice = new WasapiLoopbackCapture(device);
-
+            bufferBack = new byte[captureDevice.WaveFormat.ConvertLatencyToByteSize(maxLatency)];
+            Array.Clear(bufferBack, 0, bufferBack.Length);
+            bufferForward = new byte[captureDevice.WaveFormat.ConvertLatencyToByteSize(maxLatency)];
+            Array.Clear(bufferForward, 0, bufferForward.Length);
             bufferedWaveProvider = new BufferedWaveProvider(captureDevice.WaveFormat);
             bufferedWaveProvider.BufferDuration = new TimeSpan(0, 0, 0, 0, maxLatency*2);
             bufferedWaveProvider.ReadFully = true;
             bufferedWaveProvider.DiscardOnBufferOverflow = true;
             captureDevice.DataAvailable += (sender, waveInEventArgs) =>
+            {
+                if(firstBuffer)
+                {
+                    //Debug.WriteLine($"recorded {waveInEventArgs.BytesRecorded} {DateTime.Now} {DateTime.Now.Millisecond}");
+                    firstBuffer = false;
+                    Back(currentLatencyMillis);
+                }
                 bufferedWaveProvider.AddSamples(waveInEventArgs.Buffer, 0, waveInEventArgs.BytesRecorded);
+            };
             resampler = new MediaFoundationResampler(bufferedWaveProvider, format);
 
             meteringSampleProvider = new MeteringSampleProvider(resampler.ToSampleProvider());
@@ -73,24 +88,25 @@ namespace CineCast
         {
             if (millis <= 0) return;
             var len = captureDevice.WaveFormat.ConvertLatencyToByteSize(millis);
-            byte[] buffer = new byte[len];
-            bufferedWaveProvider.Read(buffer, 0, len);
+            //Debug.WriteLine($"forward {millis} {len}");
+            bufferedWaveProvider.Read(bufferForward, 0, len);
         }
         public void Back(int millis)
         {
             if (millis <= 0) return;
             var len = captureDevice.WaveFormat.ConvertLatencyToByteSize(millis);
-            byte[] buffer = new byte[len];
-            Array.Clear(buffer, 0, len);
-            bufferedWaveProvider.AddSamples(buffer, 0, len);
+            //Debug.WriteLine($"back {millis} {len}");
+            bufferedWaveProvider.AddSamples(bufferBack, 0, len);
         }
         public void Start()
         {
+            firstBuffer = true;
             bufferedWaveProvider.ClearBuffer();
-            Back(currentLatencyMillis);
+            //Debug.WriteLine($"start {DateTime.Now} {DateTime.Now.Millisecond}");
             captureDevice.StartRecording();
         }
-        public void Stop() {
+        public void Stop()
+        {
             captureDevice.StopRecording();
         }
         public static IEnumerable<IAudioInput> GetAvailable(WaveFormat format, int DesiredLatency = 100)

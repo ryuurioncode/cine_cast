@@ -33,6 +33,12 @@ namespace CineCast
             UpdateSources();
         }
 
+        public void StartWhatNeedOnInit()
+        {
+            foreach (var audioInputControl in audioInputControls)
+                audioInputControl.StartIfNeedOnInit();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             foreach (var control in audioInputControls)

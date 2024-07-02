@@ -181,6 +181,7 @@ namespace NAudio.Wave
         private volatile PlaybackState playbackState;
         private AutoResetEvent callbackEvent;
         public WaveOutCallbackBuffer[] buffers;
+        public event EventHandler? PlaybackStarted;
 
         /// <summary>
         /// Indicates playback has stopped automatically
@@ -309,8 +310,13 @@ namespace NAudio.Wave
 
         private void DoPlayback()
         {
+            int DesiredLoopsToSignalStart = 10;
+            int currentLoop = 0;
             while (playbackState != PlaybackState.Stopped)
             {
+                if (currentLoop == DesiredLoopsToSignalStart) PlaybackStarted?.Invoke(this, null);
+                if (currentLoop <= DesiredLoopsToSignalStart) currentLoop++;
+
                 if (!callbackEvent.WaitOne(DesiredLatency))
                 {
                     if (playbackState == PlaybackState.Playing)

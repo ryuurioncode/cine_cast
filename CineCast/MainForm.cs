@@ -38,8 +38,8 @@ namespace CineCast
             fileMp3CastControl1.Initialize(streamFormat, cache.properties.mp3FileOutputProperties, trackInfoControl1.trackInfo);
             icecastControl1.Inititalize(streamFormat, cache.properties.icecastProperties, fileMp3CastControl1, trackInfoControl1.trackInfo);
             audioInputsControl1.Initialize(streamFormat, mixerControl.audioInputMixer, Latency, cache.properties.inputProperties);
-
             player = new WaveOutCallbackEvent();
+            player.DesiredLatency = 20;
             player.Init(mixerControl.audioInputMixer.ToWaveProvider());
             foreach (var buffer in player.buffers)
                 buffer.DataAvailable += (sender, args) =>
@@ -47,12 +47,18 @@ namespace CineCast
                     icecastControl1.Write(args.buffer, args.offset, args.length);
                     fileMp3CastControl1.Write(args.buffer, args.offset, args.length);
                 };
-            player.Play();
+            player.PlaybackStarted += (sender, args) =>
+            {
+                audioInputsControl1.Invoke(() =>
+                {
+                    audioInputsControl1.StartWhatNeedOnInit();
+                });
+            };
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            player.Play();
         }
 
         private void audioInputsControl1_Load(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using System.Collections;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NAudio.Mixer;
+using static System.Windows.Forms.DataFormats;
 
 namespace CineCast
 {
@@ -26,6 +27,8 @@ namespace CineCast
             this.format = format is null ? WaveFormat.CreateIeeeFloatWaveFormat(44100, 2) : format;
             mixer = new MixingSampleProvider(this.format);
             bufferedWaveProvider = new BufferedWaveProvider(this.format);
+            bufferedWaveProvider.ReadFully = true;
+            bufferedWaveProvider.DiscardOnBufferOverflow = true;
             OnVolume = null;
             meteringSampleProvider = new MeteringSampleProvider(mixer);
             meteringSampleProvider.SamplesPerNotification = this.format.ConvertLatencyToByteSize(10);

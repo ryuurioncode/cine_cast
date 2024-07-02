@@ -44,8 +44,6 @@ namespace CineCast
                 case AudioInputType.Playback: label1.Text = $"Динамик {input.Name}"; break;
                 default: label1.Text = $"{input.Name}"; break;
             }
-            if (properties.Enabled) Play();
-            else Mute();
             soundControl.Volume = properties.Volume;
             soundControl.OnVolume += (sender, volume) =>
             {
@@ -63,7 +61,12 @@ namespace CineCast
                     soundControl.CurrentVolume = volume;
                 });
             };
+        }
 
+        public void StartIfNeedOnInit()
+        {
+            if (properties.Enabled) Play();
+            else Mute();
         }
 
         public void Mute()
