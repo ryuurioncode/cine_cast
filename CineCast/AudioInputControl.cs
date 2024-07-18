@@ -1,6 +1,7 @@
 ﻿using CineCast.Properties;
 using NAudio.CoreAudioApi;
 using NAudio.Gui;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CineCast
 {
@@ -18,7 +20,9 @@ namespace CineCast
     {
         private bool Playing;
         public IAudioInput? input = null;
+        public bool Hidden = false;
         InputProperties properties;
+        public event EventHandler<bool>? OnHiddenChanged;
         public AudioInputControl()
         {
             InitializeComponent();
@@ -33,6 +37,8 @@ namespace CineCast
         {
             this.properties = properties;
             this.input = input;
+            Hidden = this.properties.Hidden;
+            pictureBox2.Image = Hidden ? Resources.EyeClosed : Resources.EyeOpened;
             input.Latency = properties.Latency;
             properties.Latency = input.Latency;
             textBox1.Text = input.Latency.ToString();
@@ -125,6 +131,14 @@ namespace CineCast
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            Hidden = !Hidden;
+            properties.Hidden = Hidden;
+            pictureBox2.Image = Hidden ? Resources.EyeClosed : Resources.EyeOpened;
+            OnHiddenChanged?.Invoke(this, Hidden);
         }
     }
 }

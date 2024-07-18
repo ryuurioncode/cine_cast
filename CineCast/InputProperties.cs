@@ -12,5 +12,6 @@ namespace CineCast
         public float Volume { get; set; }
         public bool Enabled { get; set; } = false;
         public int Latency { get; set; } = 0;
+        public bool Hidden { get; set; } = false;
     }
 }
