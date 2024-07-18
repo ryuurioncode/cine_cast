@@ -19,6 +19,7 @@ namespace CineCast
         private int Latency = 100;
         private List<AudioInputControl> audioInputControls = new List<AudioInputControl>();
         private Dictionary<string, InputProperties> properties;
+        private bool ShowHidden = false;
         public AudioInputsControl()
         {
             InitializeComponent();
@@ -44,6 +45,13 @@ namespace CineCast
 
         }
 
+        private void UpdateView()
+        {
+            RemoveAudioSources();
+            foreach (var input in audioInputControls)
+                if (ShowHidden || !input.Hidden) AppendAudioSource(input);
+        }
+
         private void UpdateSources()
         {
             RemoveAudioSources();
@@ -63,7 +71,7 @@ namespace CineCast
                 else
                 {
                     var inputControl = new AudioInputControl();
-                    if(!properties.TryGetValue(input.UniqueId, out var props))
+                    if (!properties.TryGetValue(input.UniqueId, out var props))
                     {
                         props = new InputProperties();
                         props.Volume = 1;
@@ -71,6 +79,7 @@ namespace CineCast
                         properties.Add(input.UniqueId, props);
                     }
                     inputControl.Initialize(input, props);
+                    inputControl.OnHiddenChanged += (e, a) => { UpdateView(); };
                     mixer?.AppendAudioInput(input);
                     inputsResult.Add(inputControl);
                 }
@@ -85,16 +94,15 @@ namespace CineCast
                 }
             }
             audioInputControls = inputsResult;
-            foreach (var input in audioInputControls)
-                AppendAudioSource(input);
+            UpdateView();
         }
 
         private void RemoveAudioSources()
         {
-            foreach (var input in audioInputControls)
-            {
-                panel1.Controls.Remove(input);
-            }
+            //foreach (var input in audioInputControls)
+            //{
+            //    panel1.Controls.Remove(input);
+            //}
             panel1.Controls.Clear();
         }
 
@@ -136,6 +144,13 @@ namespace CineCast
                 control.Width = panel1.Width - SystemInformation.VerticalScrollBarWidth;
                 control.Refresh();
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ShowHidden = !ShowHidden;
+            button4.Text = !ShowHidden ? "Показать скрытые" : "Скрыть скрытые";
+            UpdateView();
         }
     }
 }
