@@ -16,6 +16,7 @@ namespace CineCast
     {
         private IcecastControl? icecastControl;
         private FileMp3CastControl? fileMp3CastControl;
+
         public TrackInfo trackInfo = new TrackInfo();
         public TrackInfoControl()
         {
@@ -28,6 +29,7 @@ namespace CineCast
             this.icecastControl = icecastControl;
             this.fileMp3CastControl = fileMp3CastControl;
             textBox1.Text = trackInfo.genre;
+            trackInfo.title = string.Empty;
             textBox2.Text = trackInfo.title;
             textBox2.PlaceholderText = "обязательное поле";
         }

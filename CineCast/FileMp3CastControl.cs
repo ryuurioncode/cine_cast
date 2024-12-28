@@ -37,7 +37,7 @@ namespace CineCast
             this.format = format;
             if (String.IsNullOrWhiteSpace(properties.Directory))
                 properties.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            else textBox1.Text = properties.Name ?? String.Empty;
+            else textBox1.Text = String.Empty;
             textBox2.Text = Path.Combine(properties.Directory, textBox1.Text);
         }
 
