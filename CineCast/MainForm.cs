@@ -32,7 +32,7 @@ namespace CineCast
             cache = new ProperiesFileCache(Path.Combine(cacheFileDirectory, cacheFileName));
             streamFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);
 
-            trackInfoControl1.Initialize(cache.properties.trackInfo);
+            trackInfoControl1.Initialize(cache.properties.trackInfo, icecastControl1);
             mixerControl.Initialize(streamFormat, Latency, cache.properties.outputMixerProperties);
             if (mixerControl.audioInputMixer is null) throw new NoNullAllowedException(nameof(mixerControl.audioInputMixer));
             fileMp3CastControl1.Initialize(streamFormat, cache.properties.mp3FileOutputProperties, trackInfoControl1.trackInfo);

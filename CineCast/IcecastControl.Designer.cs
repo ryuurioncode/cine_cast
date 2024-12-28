@@ -51,10 +51,10 @@
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            button1.Location = new Point(17, 376);
-            button1.Margin = new Padding(6, 6, 6, 6);
+            button1.Location = new Point(6, 359);
+            button1.Margin = new Padding(6);
             button1.Name = "button1";
-            button1.Size = new Size(463, 49);
+            button1.Size = new Size(444, 49);
             button1.TabIndex = 0;
             button1.Text = "Подключиться";
             button1.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(17, 51);
+            label1.Location = new Point(17, 48);
             label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
             label1.Size = new Size(63, 32);
@@ -74,18 +74,19 @@
             // 
             textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox1.Location = new Point(119, 45);
-            textBox1.Margin = new Padding(6, 6, 6, 6);
+            textBox1.Margin = new Padding(6);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(358, 39);
+            textBox1.Size = new Size(339, 39);
             textBox1.TabIndex = 2;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(119, 107);
-            textBox2.Margin = new Padding(6, 6, 6, 6);
+            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox2.Location = new Point(119, 96);
+            textBox2.Margin = new Padding(6);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(99, 39);
+            textBox2.Size = new Size(339, 39);
             textBox2.TabIndex = 4;
             textBox2.TextChanged += textBox2_TextChanged;
             textBox2.KeyPress += textBox2_KeyPress;
@@ -93,7 +94,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(17, 113);
+            label2.Location = new Point(17, 99);
             label2.Margin = new Padding(6, 0, 6, 0);
             label2.Name = "label2";
             label2.Size = new Size(69, 32);
@@ -103,17 +104,17 @@
             // textBox3
             // 
             textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox3.Location = new Point(119, 169);
-            textBox3.Margin = new Padding(6, 6, 6, 6);
+            textBox3.Location = new Point(119, 198);
+            textBox3.Margin = new Padding(6);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(358, 39);
+            textBox3.Size = new Size(339, 39);
             textBox3.TabIndex = 6;
             textBox3.TextChanged += textBox3_TextChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(17, 175);
+            label3.Location = new Point(17, 201);
             label3.Margin = new Padding(6, 0, 6, 0);
             label3.Name = "label3";
             label3.Size = new Size(61, 32);
@@ -124,18 +125,18 @@
             // textBox4
             // 
             textBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox4.Location = new Point(119, 230);
-            textBox4.Margin = new Padding(6, 6, 6, 6);
+            textBox4.Location = new Point(119, 249);
+            textBox4.Margin = new Padding(6);
             textBox4.Name = "textBox4";
             textBox4.PasswordChar = '*';
-            textBox4.Size = new Size(304, 39);
+            textBox4.Size = new Size(285, 39);
             textBox4.TabIndex = 8;
             textBox4.TextChanged += textBox4_TextChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(17, 237);
+            label4.Location = new Point(17, 252);
             label4.Margin = new Padding(6, 0, 6, 0);
             label4.Name = "label4";
             label4.Size = new Size(96, 32);
@@ -145,7 +146,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(232, 113);
+            label5.Location = new Point(17, 150);
             label5.Margin = new Padding(6, 0, 6, 0);
             label5.Name = "label5";
             label5.Size = new Size(65, 32);
@@ -155,10 +156,10 @@
             // textBox5
             // 
             textBox5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox5.Location = new Point(305, 107);
-            textBox5.Margin = new Padding(6, 6, 6, 6);
+            textBox5.Location = new Point(119, 147);
+            textBox5.Margin = new Padding(6);
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(172, 39);
+            textBox5.Size = new Size(339, 39);
             textBox5.TabIndex = 10;
             textBox5.TextChanged += textBox5_TextChanged;
             // 
@@ -180,10 +181,10 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.Location = new Point(6, 6);
-            groupBox1.Margin = new Padding(6, 6, 6, 6);
+            groupBox1.Margin = new Padding(6);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(6, 6, 6, 6);
-            groupBox1.Size = new Size(785, 438);
+            groupBox1.Padding = new Padding(6);
+            groupBox1.Size = new Size(766, 420);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
             groupBox1.Text = "Icecast";
@@ -192,8 +193,8 @@
             // pictureBox2
             // 
             pictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox2.Location = new Point(437, 230);
-            pictureBox2.Margin = new Padding(6, 6, 6, 6);
+            pictureBox2.Location = new Point(415, 239);
+            pictureBox2.Margin = new Padding(6);
             pictureBox2.MaximumSize = new Size(43, 49);
             pictureBox2.MinimumSize = new Size(43, 49);
             pictureBox2.Name = "pictureBox2";
@@ -206,10 +207,10 @@
             // checkBox1
             // 
             checkBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            checkBox1.Location = new Point(17, 292);
-            checkBox1.Margin = new Padding(6, 6, 6, 6);
+            checkBox1.Location = new Point(17, 300);
+            checkBox1.Margin = new Padding(6);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(463, 51);
+            checkBox1.Size = new Size(444, 51);
             checkBox1.TabIndex = 12;
             checkBox1.Text = "Автоматически записывать в файл";
             checkBox1.UseVisualStyleBackColor = true;
@@ -220,10 +221,10 @@
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             pictureBox1.Image = Properties.Resources.PausedGif;
             pictureBox1.InitialImage = Properties.Resources.PausedGif;
-            pictureBox1.Location = new Point(491, 51);
-            pictureBox1.Margin = new Padding(6, 6, 6, 6);
+            pictureBox1.Location = new Point(472, 45);
+            pictureBox1.Margin = new Padding(6);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(282, 364);
+            pictureBox1.Size = new Size(282, 363);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 11;
             pictureBox1.TabStop = false;
@@ -233,10 +234,11 @@
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(groupBox1);
-            Margin = new Padding(6, 6, 6, 6);
+            Margin = new Padding(6);
+            MinimumSize = new Size(778, 432);
             Name = "IcecastControl";
-            Padding = new Padding(6, 6, 6, 6);
-            Size = new Size(797, 450);
+            Padding = new Padding(6);
+            Size = new Size(778, 432);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
