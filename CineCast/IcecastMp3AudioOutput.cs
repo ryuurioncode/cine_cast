@@ -42,8 +42,8 @@ namespace CineCast
             icecast.setUser(user);
             icecast.setPassword(password);
             icecast.setFormat(Libshout.FORMAT_MP3);
-            if (!String.IsNullOrWhiteSpace(genre)) icecast.setGenre(FixEncoding(genre));
-            if (!String.IsNullOrWhiteSpace(title)) icecast.setInfo("title", FixEncoding(title));
+            if(!String.IsNullOrWhiteSpace(genre)) icecast.setGenre(FixEncoding(genre));
+            if(!String.IsNullOrWhiteSpace(title)) icecast.setInfo("title", FixEncoding(title));
             icecast.open();
         }
         public void Close()
@@ -69,8 +69,11 @@ namespace CineCast
 
         private string FixEncoding(string source)
         {
-            byte[] bytes = Encoding.Default.GetBytes(source);
-            return Encoding.GetEncoding(1252).GetString(bytes);
+            var defaultBytes = Encoding.Default.GetBytes(source);
+            var unicodeString = Encoding.GetEncoding(
+                    System.Globalization.CultureInfo.CurrentCulture.TextInfo.ANSICodePage
+                ).GetString(defaultBytes);
+            return unicodeString;
         }
 
         public void Dispose()
