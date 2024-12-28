@@ -35,7 +35,8 @@ namespace CineCast
             this.trackInfo = trackInfo;
             this.properties = properties;
             this.format = format;
-            if (String.IsNullOrWhiteSpace(properties.Directory)) properties.Directory = AppDomain.CurrentDomain.BaseDirectory;
+            if (String.IsNullOrWhiteSpace(properties.Directory))
+                properties.Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             else textBox1.Text = properties.Name ?? String.Empty;
             textBox2.Text = Path.Combine(properties.Directory, textBox1.Text);
         }
@@ -82,6 +83,11 @@ namespace CineCast
         }
 
         public bool Valid => !(String.IsNullOrWhiteSpace(FilePrefix) || String.IsNullOrWhiteSpace(textBox1.Text));
+
+        public void UpdateName(string name)
+        {
+            textBox1.Text = name;
+        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {

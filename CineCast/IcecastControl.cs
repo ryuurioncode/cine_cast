@@ -51,7 +51,7 @@ namespace CineCast
             textBox4.Text = properties.Password;
             textBox4.PlaceholderText = "обязательное поле";
             checkBox1.Enabled = fileDumper is not null;
-            checkBox1.Checked = properties.autoDump && fileDumper is not null;
+            checkBox1.Checked = fileDumper is not null;
             ValidateTarget();
         }
 
@@ -219,7 +219,6 @@ namespace CineCast
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            properties.autoDump = checkBox1.Checked;
         }
     }
 }

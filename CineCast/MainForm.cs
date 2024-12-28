@@ -21,7 +21,7 @@ namespace CineCast
     public partial class MainForm : Form
     {
         private readonly string cacheFileName = "cine.data";
-        private readonly string cacheFileDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        private readonly string cacheFileDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private readonly ProperiesFileCache cache;
         private readonly WaveFormat streamFormat;
         private readonly int Latency = 200;
@@ -32,9 +32,9 @@ namespace CineCast
             cache = new ProperiesFileCache(Path.Combine(cacheFileDirectory, cacheFileName));
             streamFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);
 
-            trackInfoControl1.Initialize(cache.properties.trackInfo, icecastControl1);
+            trackInfoControl1.Initialize(cache.properties.trackInfo, icecastControl1, fileMp3CastControl1);
             mixerControl.Initialize(streamFormat, Latency, cache.properties.outputMixerProperties);
-            if (mixerControl.audioInputMixer is null) throw new NoNullAllowedException(nameof(mixerControl.audioInputMixer));
+            if(mixerControl.audioInputMixer is null) throw new NoNullAllowedException(nameof(mixerControl.audioInputMixer));
             fileMp3CastControl1.Initialize(streamFormat, cache.properties.mp3FileOutputProperties, trackInfoControl1.trackInfo);
             icecastControl1.Inititalize(streamFormat, cache.properties.icecastProperties, fileMp3CastControl1, trackInfoControl1.trackInfo);
             audioInputsControl1.Initialize(streamFormat, mixerControl.audioInputMixer, Latency, cache.properties.inputProperties);

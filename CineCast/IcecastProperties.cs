@@ -8,7 +8,6 @@ namespace CineCast
 {
     public class IcecastProperties
     {
-        public bool autoDump { get; set; } = false;
         public string? Host { get; set; }
         public string? Port { get; set; }
         public string? Mount { get; set; }
