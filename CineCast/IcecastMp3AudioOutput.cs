@@ -9,6 +9,7 @@ using IceCastLibrary;
 using NAudio.CoreAudioApi;
 using System.Linq.Expressions;
 using System.Diagnostics;
+using System.Text.Unicode;
 
 namespace CineCast
 {
@@ -41,8 +42,8 @@ namespace CineCast
             icecast.setUser(user);
             icecast.setPassword(password);
             icecast.setFormat(Libshout.FORMAT_MP3);
-            if(!String.IsNullOrWhiteSpace(genre)) icecast.setGenre(genre);
-            if(!String.IsNullOrWhiteSpace(title)) icecast.setInfo("title", title);
+            if (!String.IsNullOrWhiteSpace(genre)) icecast.setGenre(FixEncoding(genre));
+            if (!String.IsNullOrWhiteSpace(title)) icecast.setInfo("title", FixEncoding(title));
             icecast.open();
         }
         public void Close()
@@ -65,6 +66,13 @@ namespace CineCast
                 Debug.WriteLine(e.ToString());
             }
         }
+
+        private string FixEncoding(string source)
+        {
+            byte[] bytes = Encoding.Default.GetBytes(source);
+            return Encoding.GetEncoding(1252).GetString(bytes);
+        }
+
         public void Dispose()
         {
             mp3Converter.Dispose();

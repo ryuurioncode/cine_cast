@@ -41,10 +41,15 @@ namespace CineCast
             this.properties = properties;
             audioOutput = new IcecastMp3AudioOutput(format);
             textBox1.Text = properties.Host;
+            textBox1.PlaceholderText = "обязательное поле";
             textBox2.Text = properties.Port;
+            textBox2.PlaceholderText = "обязательное поле";
             textBox5.Text = properties.Mount;
+            textBox5.PlaceholderText = "обязательное поле";
             textBox3.Text = properties.User;
+            textBox3.PlaceholderText = "обязательное поле";
             textBox4.Text = properties.Password;
+            textBox4.PlaceholderText = "обязательное поле";
             checkBox1.Enabled = fileDumper is not null;
             checkBox1.Checked = properties.autoDump && fileDumper is not null;
             ValidateTarget();
@@ -64,10 +69,11 @@ namespace CineCast
                 && !String.IsNullOrWhiteSpace(textBox2.Text)
                 && !String.IsNullOrWhiteSpace(textBox3.Text)
                 && !String.IsNullOrWhiteSpace(textBox4.Text)
-                && !String.IsNullOrWhiteSpace(textBox5.Text);
+                && !String.IsNullOrWhiteSpace(textBox5.Text)
+                && !String.IsNullOrWhiteSpace(trackInfo?.title);
         }
 
-        private void ValidateTarget()
+        public void ValidateTarget()
         {
             if (!isTargetValid() || audioOutput is null)
                 button1.Enabled = false;
