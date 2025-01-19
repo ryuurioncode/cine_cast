@@ -15,6 +15,9 @@ using Microsoft.VisualBasic.Devices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Data;
+using System.Text;
+using System.Security.Policy;
+using System.Web;
 
 namespace CineCast
 {
@@ -26,6 +29,7 @@ namespace CineCast
         private readonly WaveFormat streamFormat;
         private readonly int Latency = 200;
         private readonly WaveOutCallbackEvent player;
+
         public MainForm()
         {
             InitializeComponent();
