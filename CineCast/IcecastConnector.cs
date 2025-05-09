@@ -1,6 +1,7 @@
 ﻿using IceCastLibrary;
 using Microsoft.VisualBasic.Devices;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -49,34 +50,45 @@ namespace CineCast
         // TODO: implement later, now does no process some symbols
         // https://icecast.org/docs/icecast-2.3.1/admin-interface.html
         // https://www.opennet.ru/base/sys/radio_protocols.txt.html
-        private void SetTitle()
+        private async Task SetTitleSync()
+        {
+            // Calling an async method inside a synchronous method (Main)
+            await Task.Run(() => SetTitle());
+        }
+
+        private async Task SetTitle()
         {
             var queryDictionary = new Dictionary<string, string> {
                 { "mode", HttpUtility.UrlEncode("updinfo") },
+                { "charset", HttpUtility.UrlEncode("utf-8") },
                 { "mount", HttpUtility.UrlEncode(properties.Mount.StartsWith("/") ? properties.Mount : $"/{properties.Mount}") },
-                { "song", EncodingFixer.UrlEncode(properties.StreamTitle) },
+                //{ "song", EncodingFixer.UrlEncode(properties.StreamTitle) },
+                { "song", HttpUtility.UrlEncode(properties.StreamTitle) },
             };
             var url = "/admin/metadata?" + string.Join("&", queryDictionary.Select(kvp =>
                 $"{kvp.Key}={kvp.Value}"));
-            string headers = $"GET {url} HTTP/1.1\r\n" +
-                             $"Host: {properties.Host}:{properties.Port}\r\n" +
-                             "User-Agent: CineCast\r\n" +
-                             $"Authorization: Basic {authString}\r\n\r\n";
-            var header_bytes = Encoding.ASCII.GetBytes(headers);
-            var client = new TcpClient(properties.Host, properties.Port);
-            client.Client.Send(header_bytes);
-            client.Close();
+            var uriBuilderTitle = new UriBuilder();
+            uriBuilderTitle.Host= properties.Host;
+            uriBuilderTitle.Port = properties.Port;
+            using (var title_client = new HttpClient())
+            {
+                title_client.BaseAddress = uriBuilderTitle.Uri;
+                title_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authString);
+                var response = await title_client.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception($"Не вышло выставить тайтл! {response.StatusCode} -> {response.Content}");
+            }
         }
         public void Connect()
         {
-            if (properties.StreamTitle.Length > 33)
-                throw new Exception($"Название стрима должны состоять из 33 символов и меньше (сейчас их {properties.StreamTitle.Length})");
+            //if (properties.StreamTitle.Length > 33)
+            //    throw new Exception($"Название стрима должны состоять из 33 символов и меньше (сейчас их {properties.StreamTitle.Length})");
             string headers = $"PUT /{properties.Mount} HTTP/1.1\r\n" +
                              $"Host: {properties.Host}:{properties.Port}\r\n" +
                              "User-Agent: CineCast\r\n" +
                              $"Authorization: Basic {authString}\r\n" +
-                            // TODO: 33 chars max for title, need to use GET method instead
-                             $"ice-audio-info: title={EncodingFixer.UrlEncode(properties.StreamTitle)}\r\n" + 
+                             // TODO: 33 chars max for title, need to use GET method instead
+                             //$"ice-audio-info: title={EncodingFixer.UrlEncode(properties.StreamTitle)}\r\n" + 
                              "Content-Type: audio/mpeg\r\n" +
                              "Transfer-Encoding: chunked\r\n" +
                              "ice-public: 1\r\n" +
@@ -89,7 +101,7 @@ namespace CineCast
             icecastStream = icecastClient?.GetStream();
             icecastStream?.Write(headerBytes, 0, headerBytes.Length);
 
-            //SetTitle();
+            Task.Run(async () => await SetTitle()).Wait();
         }
 
         public void Write(byte[] buffer, int offset, int length)
